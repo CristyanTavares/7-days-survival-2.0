@@ -794,12 +794,20 @@
 
   <!-- Meta Pixel Code -->
   <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1407849521540371');
-    fbq('track', 'PageView');
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2339974420127897');
+  fbq('track', 'PageView');
+  fbq('track', 'InitiateCheckout');
   </script>
   <noscript>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1407849521540371&ev=PageView&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2339974420127897&ev=PageView&noscript=1"/>
   </noscript>
   <!-- End Meta Pixel Code -->
 
@@ -861,7 +869,7 @@
         </ul>
 
         <div class="hero-cta-group fade-up delay-3">
-          <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" class="btn btn-primary btn-lg js-checkout-btn">
+          <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="btn btn-primary btn-lg js-checkout-btn">
             🛡️ Get the 7-Day Survival Protocol Now
           </a>
           <div class="hero-cta-note">
@@ -1110,7 +1118,7 @@
           <img src="assets/product_guide_mockup.webp" alt="The 7-Day Survival Protocol - 100-Page Guide" />
         </div>
         <div style="margin-top: 24px; text-align: center;">
-          <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" class="btn btn-primary btn-full js-checkout-btn">
+          <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="btn btn-primary btn-full js-checkout-btn">
             Get Instant Access to the 100-Page Guide →
           </a>
         </div>
@@ -1528,7 +1536,7 @@
       </div>
 
       <!-- Checkout Link: Paste your Hotmart, Kiwify, Wiapy, Stripe, or ClickBank link here -->
-      <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" class="btn btn-primary btn-lg btn-full js-checkout-btn" id="cta-checkout">
+      <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="btn btn-primary btn-lg btn-full js-checkout-btn" id="cta-checkout">
         🛡️ GET INSTANT ACCESS NOW
       </a>
 
@@ -1628,7 +1636,7 @@
       <p class="final-cta-price">
         Core Guide (100 Pages) + 6 Bonus Sections (50 Pages) for just <strong>$9.90</strong>
       </p>
-      <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" class="btn btn-primary btn-lg js-checkout-btn">
+      <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="btn btn-primary btn-lg js-checkout-btn">
         🛡️ Get My 7-Day Protocol + Bonuses Now
       </a>
       <p style="margin-top: 22px; font-size: 14px; color: rgba(255,255,255,0.50);">
@@ -1657,26 +1665,37 @@
   <div class="sticky-cta-text">
     7-Day Protocol (100 Pages) + <span>50-Page Bonus Workbook</span> for $9.90
   </div>
-  <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" class="sticky-btn js-checkout-btn">Get Instant Access →</a>
+  <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="sticky-btn js-checkout-btn">Get Instant Access →</a>
 </div>
 
 <!-- ═══════════════ SCRIPTS ═══════════════ -->
 <script>
-  /* ── Checkout redirect preserving URL query parameters (UTM, etc.) ── */
+  /* ── Checkout redirect forcing URL query parameters (window.location.search -> window.location.href) ── */
   const CHECKOUT_BASE_URL = 'https://pay.hotmart.com/R108349121R?checkoutMode=10';
 
-  function goToCheckout() {
+  function buildCheckoutUrl(baseUrl) {
+    const base = baseUrl || CHECKOUT_BASE_URL;
     const search = window.location.search || '';
-    const delimiter = CHECKOUT_BASE_URL.includes('?') ? (search.startsWith('?') ? '&' + search.substring(1) : search) : search;
-    const finalUrl = CHECKOUT_BASE_URL + delimiter;
+    if (!search) return base;
+    const cleanSearch = search.startsWith('?') ? search.substring(1) : search;
+    if (!cleanSearch) return base;
+    return base + (base.includes('?') ? '&' : '?') + cleanSearch;
+  }
+
+  function goToCheckout(e) {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+    const finalUrl = buildCheckoutUrl(CHECKOUT_BASE_URL);
     window.location.href = finalUrl;
+    return false;
   }
 
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.js-checkout-btn, a[href*="pay.hotmart.com"], a[href*="pay.wiapy.com"]').forEach(function(link) {
+      link.href = buildCheckoutUrl(CHECKOUT_BASE_URL);
       link.addEventListener('click', function(e) {
-        e.preventDefault();
-        goToCheckout();
+        return goToCheckout(e);
       });
     });
   });
