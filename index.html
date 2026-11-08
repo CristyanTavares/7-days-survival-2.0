@@ -1094,7 +1094,7 @@
         </ul>
 
         <div class="hero-cta-group fade-up delay-3">
-          <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="btn btn-primary btn-lg js-checkout-btn">
+          <a href="#pricing" class="btn btn-primary btn-lg">
             🛡️ Get the 7-Day Survival Protocol Now
           </a>
           <div class="hero-cta-note">
@@ -1343,7 +1343,7 @@
           <img src="assets/product_guide_mockup.webp" alt="The 7-Day Survival Protocol - 100-Page Guide" />
         </div>
         <div style="margin-top: 24px; text-align: center;">
-          <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="btn btn-primary btn-full js-checkout-btn">
+          <a href="#pricing" class="btn btn-primary btn-full">
             Get Instant Access to the 100-Page Guide →
           </a>
         </div>
@@ -2327,7 +2327,7 @@
       <p class="final-cta-price">
         Core Guide (100 Pages) + 6 Bonus Sections (50 Pages) for just <strong>$9.90</strong>
       </p>
-      <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="btn btn-primary btn-lg js-checkout-btn">
+      <a href="#pricing" class="btn btn-primary btn-lg">
         🛡️ Get My 7-Day Protocol + Bonuses Now
       </a>
       <p style="margin-top: 22px; font-size: 14px; color: rgba(255,255,255,0.50);">
@@ -2356,7 +2356,7 @@
   <div class="sticky-cta-text">
     7-Day Protocol (100 Pages) + <span>50-Page Bonus Workbook</span> for $9.90
   </div>
-  <a href="https://pay.hotmart.com/R108349121R?checkoutMode=10" onclick="return goToCheckout(event);" class="sticky-btn js-checkout-btn">Get Instant Access →</a>
+  <a href="#pricing" class="sticky-btn">Get Instant Access →</a>
 </div>
 
 <!-- ═══════════════ SCRIPTS ═══════════════ -->
@@ -2383,7 +2383,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.js-checkout-btn, a[href*="pay.hotmart.com"], a[href*="pay.wiapy.com"]').forEach(function(link) {
+    document.querySelectorAll('#cta-checkout').forEach(function(link) {
       link.href = buildCheckoutUrl(CHECKOUT_BASE_URL);
       link.addEventListener('click', function(e) {
         return goToCheckout(e);
